@@ -10,7 +10,6 @@ import { useLocalDefault, useThemeDetector, useGetLocal } from "../utils";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { RendererProvider, createDOMRenderer } from "@griffel/react";
-import { AppProvider } from "../context";
 import { AppContainer } from "../components";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "../clients";
@@ -27,36 +26,40 @@ export default function App(props: AppProps) {
 
   // 1. Get the default theme from local storage.
   useLocalDefault("theme", "system");
-  const userTheme = useGetLocal("theme");
 
-  // 2. Check whether the browser is using dark mode or light mode
-  const isDarkTheme = useThemeDetector();
-
-  // 3. Callback function for returning the current theme for the components.
-  const findTheme = React.useCallback(
-    (theme: string) => {
-      switch (theme) {
-        case "system":
-          return isDarkTheme ? webDarkTheme : webLightTheme;
-        case "dark":
-          return webDarkTheme;
-        default:
-          return webLightTheme;
-      }
-    },
-    [isDarkTheme]
-  );
-
-  // 4. Initialize the current theme
-  const [theme, setTheme] = React.useState(findTheme(userTheme));
-
-  // 5. Update the current theme when the os theme changes or local storage updates
-  React.useEffect(() => {
-    setTheme(findTheme(userTheme));
-  }, [isDarkTheme, findTheme, userTheme]);
+  const [theme, setTheme] = React.useState(webLightTheme);
 
   React.useEffect(() => {
     setIsMounted(true);
+
+    const updateThemeBasedOnTime = () => {
+      const now = new Date();
+      const hour = now.getHours();
+
+      // Switch to dark theme after 7 PM and before 7 AM
+      if (hour >= 19 || hour < 7) {
+        setTheme(webDarkTheme);
+      } else {
+        setTheme(webLightTheme);
+      }
+    };
+
+    // Calculate the milliseconds until the next hour to align theme updates
+    const now = new Date();
+    const msUntilNextHour =
+      (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
+    const timeoutId = setTimeout(() => {
+      updateThemeBasedOnTime();
+
+      // After the first timeout, set an interval to update the theme every hour
+      setInterval(updateThemeBasedOnTime, 3600000);
+    }, msUntilNextHour);
+
+    updateThemeBasedOnTime();
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   return (
@@ -87,15 +90,13 @@ export default function App(props: AppProps) {
       `}</style>
       <RendererProvider renderer={pageProps.renderer || createDOMRenderer()}>
         <SSRProvider>
-          <AppProvider value={{ setTheme, findTheme }}>
-            {isMounted && (
-              <FluentProvider theme={theme} style={fluentProviderStyles}>
-                <AppContainer>
-                  <Component {...pageProps} />
-                </AppContainer>
-              </FluentProvider>
-            )}
-          </AppProvider>
+          {isMounted && (
+            <FluentProvider theme={theme} style={fluentProviderStyles}>
+              <AppContainer>
+                <Component {...pageProps} />
+              </AppContainer>
+            </FluentProvider>
+          )}
         </SSRProvider>
       </RendererProvider>
     </QueryClientProvider>
