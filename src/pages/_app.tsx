@@ -3,6 +3,7 @@ import {
   FluentProvider,
   webLightTheme,
   webDarkTheme,
+  tokens,
 } from "@fluentui/react-components";
 import { SSRProvider } from "@fluentui/react-utilities";
 import { useLocalDefault, useThemeDetector, useGetLocal } from "../utils";
@@ -14,7 +15,10 @@ import { AppContainer } from "../components";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "../clients";
 
-const fluentProviderStyles = { height: "100%" };
+const fluentProviderStyles = {
+  height: "100%",
+  backgroundColor: tokens.colorNeutralBackground2,
+};
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;
@@ -68,7 +72,7 @@ export default function App(props: AppProps) {
       </Head>
       <style jsx global>{`
         body {
-          background-color: ${theme.colorNeutralBackground2};
+          background-color: ${theme.colorNeutralBackground1};
           padding: 0px;
           margin: 0px;
           height: 100%;
