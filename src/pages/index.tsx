@@ -1,9 +1,10 @@
 import * as React from "react";
 import { tokens, makeStyles, shorthands } from "@fluentui/react-components";
-import { Clock } from "../components";
+import { Clock, WeatherIcon, Weather } from "../components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchWeather, WeatherQueryKey } from "../server";
 import { useLocation } from "../utils";
+import { WeatherProvider } from "src/context";
 
 const useStyles = makeStyles({
   container: {
@@ -12,12 +13,53 @@ const useStyles = makeStyles({
   },
 });
 
+const mockData = {
+  dailyData: {
+    timestep: "1d",
+    endTime: "2024-03-11T06:00:00-07:00",
+    startTime: "2024-03-10T06:00:00-07:00",
+    intervals: [
+      {
+        startTime: "2024-03-10T06:00:00-07:00",
+        values: {
+          precipitationProbability: 96,
+          sunriseTime: "2024-03-10T14:29:00Z",
+          sunsetTime: "2024-03-11T02:06:00Z",
+          temperature: 45.84,
+          weatherCode: 4200,
+          windSpeed: 12.03,
+        },
+      },
+      {
+        startTime: "2024-03-11T06:00:00-07:00",
+        values: {
+          precipitationProbability: 95,
+          sunriseTime: "2024-03-11T14:27:00Z",
+          sunsetTime: "2024-03-12T02:07:00Z",
+          temperature: 45.8,
+          weatherCode: 4000,
+          windSpeed: 12.92,
+        },
+      },
+    ],
+  },
+  firstDay: {
+    precipitationProbability: 96,
+    sunriseTime: "2024-03-10T14:29:00Z",
+    sunsetTime: "2024-03-11T02:06:00Z",
+    temperature: 45.84,
+    weatherCode: 4200,
+    windSpeed: 12.03,
+  },
+  sunriseTime: "2024-03-10T14:29:00Z",
+  sunsetTime: "2024-03-11T02:06:00Z",
+};
 export default function Home() {
   const styles = useStyles();
 
   const location = useLocation();
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["weather", location!],
     // TODO: Replace any with the correct type, I'm lazy atm
     queryFn: (context) => fetchWeather(context as any),
@@ -28,10 +70,11 @@ export default function Home() {
   });
 
   return (
-    <div className={styles.container}>
-      {JSON.stringify(data)} asd
-      {JSON.stringify(location)}
-      <Clock />
-    </div>
+    <WeatherProvider value={{ weather: mockData! }}>
+      <div className={styles.container}>
+        <Clock />
+        <Weather />
+      </div>
+    </WeatherProvider>
   );
 }

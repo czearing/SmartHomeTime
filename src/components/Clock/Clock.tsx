@@ -17,12 +17,6 @@ const useStyles = makeStyles({
     width: "250px",
     ...shorthands.gap(tokens.spacingHorizontalM),
   },
-  clock: {
-    fontSize: tokens.fontSizeHero900,
-  },
-  date: {
-    fontSize: tokens.fontSizeBase600,
-  },
 });
 
 export const Clock = () => {
@@ -57,8 +51,8 @@ export const Clock = () => {
 
   return (
     <Card className={styles.clockContainer} appearance="filled">
-      <Subtitle1 className={styles.date}>{currentDate}</Subtitle1>
-      <LargeTitle className={styles.clock}>{currentTime}</LargeTitle>
+      <Subtitle1>{currentDate}</Subtitle1>
+      <LargeTitle>{currentTime}</LargeTitle>
     </Card>
   );
 };

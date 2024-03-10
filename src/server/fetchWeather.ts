@@ -1,28 +1,49 @@
 import type { QueryFunctionContext } from "@tanstack/react-query";
 import type { WeatherData } from "../context";
+import queryString from "query-string";
+import { format, parseISO } from "date-fns";
 
-export type WeatherQueryKey = [
-  _key: string,
-  location: { lat: number; lng: number },
-];
+type Location = { lat: number; lng: number };
 
-const cleanWeatherJson = (data: WeatherData) => {
-  let cleanedData: any = {};
+export type WeatherQueryKey = [_key: string, location: Location];
 
-  const intervals = data.data.timelines[0].intervals;
+const createWeatherQuery = (incomingLocation: Location) => {
+  const getTimelineURL = "https://api.tomorrow.io/v4/timelines";
+  const apikey = process.env.NEXT_PUBLIC_WEATHER_API_KEY;
 
-  for (let interval of intervals) {
-    let startTime = interval.startTime;
-    let weatherCode = interval.values.weatherCode;
-    let temperature = interval.values.temperature;
+  const fields = [
+    "weatherCode",
+    "temperature",
+    "sunriseTime",
+    "sunsetTime",
+    "precipitationProbability",
+    "windSpeed",
+  ];
 
-    let date = startTime.slice(0, 10);
+  const units = "imperial";
+  const timesteps = ["current", "1h", "1d"];
+  const location = [incomingLocation.lat, incomingLocation.lng];
+  const timezone = "auto";
 
-    cleanedData[date] = { weatherCode, temperature };
-  }
+  const now = new Date();
+  const startTime = now.toISOString();
+  const endTime = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
 
-  // Return the cleanedData object
-  return cleanedData;
+  const getTimelineParameters = queryString.stringify(
+    {
+      apikey,
+      location,
+      fields,
+      units,
+      timesteps,
+      timezone,
+      startTime,
+      endTime,
+    },
+    { arrayFormat: "comma" }
+  );
+
+  return getTimelineURL + "?" + getTimelineParameters;
 };
 
 export async function fetchWeather(
@@ -30,15 +51,19 @@ export async function fetchWeather(
 ): Promise<WeatherData> {
   const [_key, location] = context.queryKey;
 
-  const res = await fetch(
-    `https://api.tomorrow.io/v4/timelines?location=${location?.lat},${location?.lng}&fields=weatherCode,temperature&timesteps=1d&units=metric&apikey=${process.env.NEXT_PUBLIC_WEATHER_API_KEY}`,
-
-    {
-      method: "GET",
-    }
-  );
+  const res = await fetch(createWeatherQuery(location), {
+    method: "GET",
+  });
 
   const data = await res.json();
 
-  return cleanWeatherJson(data);
+  const dailyData = data.data.timelines.find(
+    (timeline: any) => timeline?.timestep === "1d"
+  );
+
+  const firstDay = dailyData.intervals[0].values;
+  const sunriseTime = firstDay.sunriseTime;
+  const sunsetTime = firstDay.sunsetTime;
+
+  return { dailyData, firstDay, sunriseTime, sunsetTime };
 }
