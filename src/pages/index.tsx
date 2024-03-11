@@ -1,6 +1,6 @@
 import * as React from "react";
 import { tokens, makeStyles, shorthands } from "@fluentui/react-components";
-import { Clock, WeatherIcon, Weather } from "../components";
+import { Clock, SunRiseSet, Weather } from "../components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchWeather, WeatherQueryKey } from "../server";
 import { useLocation } from "../utils";
@@ -72,10 +72,11 @@ export default function Home() {
   });
 
   return (
-    <WeatherProvider value={{ weather: data! }}>
+    <WeatherProvider value={{ weather: mockData! }}>
       <div className={styles.container}>
         <Clock />
         <Weather />
+        <SunRiseSet />
       </div>
     </WeatherProvider>
   );

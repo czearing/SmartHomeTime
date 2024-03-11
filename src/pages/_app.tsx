@@ -38,7 +38,7 @@ export default function App(props: AppProps) {
 
       // Switch to dark theme after 7 PM and before 7 AM
       if (hour >= 19 || hour < 7) {
-        setTheme(webDarkTheme);
+        setTheme(webLightTheme);
       } else {
         setTheme(webLightTheme);
       }

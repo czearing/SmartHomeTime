@@ -5,7 +5,7 @@ const appContainerStyles = { height: "100%" };
 const useStyles = makeStyles({
   container: {
     height: "100%",
-    ...shorthands.padding("20px"),
+    ...shorthands.padding("10px"),
   },
 });
 

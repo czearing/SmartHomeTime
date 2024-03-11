@@ -27,7 +27,9 @@ const createWeatherQuery = (incomingLocation: Location) => {
 
   const now = new Date();
   const startTime = now.toISOString();
-  const endTime = new Date(now.getTime() + 24 * 60 * 60 * 1000).toISOString();
+  const endTime = new Date(
+    now.getTime() + 24 * 60 * 60 * 1000 * 2
+  ).toISOString();
 
   const getTimelineParameters = queryString.stringify(
     {
