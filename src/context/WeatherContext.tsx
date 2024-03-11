@@ -1,9 +1,5 @@
 import React from "react";
-import { WeatherData } from "./WeatherContext.types";
-
-export type WeatherContextValue = {
-  weather: WeatherData | null;
-};
+import { WeatherContextValue } from "./WeatherContext.types";
 
 export const WeatherContext = React.createContext<WeatherContextValue>({
   weather: null,

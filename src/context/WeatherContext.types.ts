@@ -5,6 +5,7 @@ export type WeatherIntervalValues = {
   temperature: number;
   weatherCode: number;
   windSpeed: number;
+  humidity: number;
 };
 
 export type WeatherInterval = {
@@ -22,6 +23,8 @@ export type WeatherTimeline = {
 export type WeatherData = {
   dailyData: WeatherTimeline;
   firstDay: WeatherIntervalValues;
-  sunriseTime: string;
-  sunsetTime: string;
+};
+
+export type WeatherContextValue = {
+  weather: WeatherData | null;
 };

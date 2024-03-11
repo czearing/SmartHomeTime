@@ -1,7 +1,6 @@
 import type { QueryFunctionContext } from "@tanstack/react-query";
 import type { WeatherData } from "../context";
 import queryString from "query-string";
-import { format, parseISO } from "date-fns";
 
 type Location = { lat: number; lng: number };
 
@@ -18,6 +17,7 @@ const createWeatherQuery = (incomingLocation: Location) => {
     "sunsetTime",
     "precipitationProbability",
     "windSpeed",
+    "humidity",
   ];
 
   const units = "imperial";
@@ -62,8 +62,6 @@ export async function fetchWeather(
   );
 
   const firstDay = dailyData.intervals[0].values;
-  const sunriseTime = firstDay.sunriseTime;
-  const sunsetTime = firstDay.sunsetTime;
 
-  return { dailyData, firstDay, sunriseTime, sunsetTime };
+  return { dailyData, firstDay };
 }
