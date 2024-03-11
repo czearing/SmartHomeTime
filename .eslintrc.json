@@ -1,7 +1,0 @@
-{
-  "root": true,
-  "plugins": ["eslint-plugin-import", "plugin:import"],
-  "rules": {
-    "import/order": "error"
-  }
-}

@@ -1,5 +1,5 @@
 import type { QueryFunctionContext } from "@tanstack/react-query";
-import type { WeatherData } from "../context";
+import type { WeatherData } from "../../context";
 import queryString from "query-string";
 
 type Location = { lat: number; lng: number };

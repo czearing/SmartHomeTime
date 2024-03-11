@@ -72,7 +72,7 @@ export const AppContainer: React.FC<{ children: React.ReactNode }> = (
   const [theme, setTheme] = React.useState(webLightTheme);
   const styles = useStyles();
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["weather", location!],
     // TODO: Replace any with the correct type, I'm lazy atm
     queryFn: (context) => fetchWeather(context as any),
