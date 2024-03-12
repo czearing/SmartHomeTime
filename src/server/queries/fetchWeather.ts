@@ -12,6 +12,8 @@ const createWeatherQuery = (incomingLocation: Location) => {
 
   const fields = [
     "weatherCode",
+    "weatherCodeDay",
+    "weatherCodeNight",
     "temperature",
     "sunriseTime",
     "sunsetTime",
