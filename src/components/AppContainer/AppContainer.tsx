@@ -9,6 +9,7 @@ import {
 } from "@fluentui/react-components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchWeather } from "../../server";
+import { useLocation } from "../../utils";
 import { WeatherProvider } from "src/context";
 
 const fluentProviderStyles = {
@@ -18,75 +19,79 @@ const fluentProviderStyles = {
 
 const useStyles = makeStyles({
   container: {
+    position: "relative",
     height: "100%",
     ...shorthands.padding("10px"),
+    boxSizing: "border-box",
   },
 });
 
-const mockData = {
-  dailyData: {
-    timestep: "1d",
-    endTime: "2024-03-11T06:00:00-07:00",
-    startTime: "2024-03-10T06:00:00-07:00",
-    intervals: [
-      {
-        startTime: "2024-03-10T06:00:00-07:00",
-        values: {
-          humidity: 92,
-          precipitationProbability: 98,
-          sunriseTime: "2024-03-10T14:29:00Z",
-          sunsetTime: "2024-03-11T02:06:00Z",
-          temperature: 45.84,
-          weatherCode: 4200,
-          windSpeed: 9.77,
-        },
-      },
-      {
-        startTime: "2024-03-11T06:00:00-07:00",
-        values: {
-          humidity: 85.97,
-          precipitationProbability: 95,
-          sunriseTime: "2024-03-11T14:27:00Z",
-          sunsetTime: "2024-03-12T02:07:00Z",
-          temperature: 45.8,
-          weatherCode: 4200,
-          windSpeed: 12.92,
-        },
-      },
-    ],
-  },
-  firstDay: {
-    humidity: 92,
-    precipitationProbability: 98,
-    sunriseTime: "2024-03-10T14:29:00Z",
-    sunsetTime: "2024-03-11T02:06:00Z",
-    temperature: 45.84,
-    weatherCode: 4200,
-    windSpeed: 9.77,
-  },
-};
+// const mockData = {
+//   dailyData: {
+//     timestep: "1d",
+//     endTime: "2024-03-11T06:00:00-07:00",
+//     startTime: "2024-03-10T06:00:00-07:00",
+//     intervals: [
+//       {
+//         startTime: "2024-03-10T06:00:00-07:00",
+//         values: {
+//           humidity: 92,
+//           precipitationProbability: 98,
+//           sunriseTime: "2024-03-10T14:29:00Z",
+//           sunsetTime: "2024-03-11T02:06:00Z",
+//           temperature: 45.84,
+//           weatherCode: 4200,
+//           windSpeed: 9.77,
+//         },
+//       },
+//       {
+//         startTime: "2024-03-11T06:00:00-07:00",
+//         values: {
+//           humidity: 85.97,
+//           precipitationProbability: 95,
+//           sunriseTime: "2024-03-11T14:27:00Z",
+//           sunsetTime: "2024-03-12T02:07:00Z",
+//           temperature: 45.8,
+//           weatherCode: 4200,
+//           windSpeed: 12.92,
+//         },
+//       },
+//     ],
+//   },
+//   firstDay: {
+//     humidity: 92,
+//     precipitationProbability: 98,
+//     sunriseTime: "2024-03-10T14:29:00Z",
+//     sunsetTime: "2024-03-11T02:06:00Z",
+//     temperature: 45.84,
+//     weatherCode: 4200,
+//     windSpeed: 9.77,
+//   },
+// };
 
 export const AppContainer: React.FC<{ children: React.ReactNode }> = (
   props
 ) => {
   const [theme, setTheme] = React.useState(webLightTheme);
+  const location = useLocation();
   const styles = useStyles();
 
   const { data } = useQuery({
-    queryKey: ["weather", location!],
-    // TODO: Replace any with the correct type, I'm lazy atm
+    queryKey: ["weather", location],
     queryFn: (context) => fetchWeather(context as any),
     enabled: !!location,
-    staleTime: 1000 * 60 * 60, // 1 hour
     refetchOnWindowFocus: false,
     retry: false,
+    staleTime: 1000 * 60 * 10,
+    // Get the weather every 30 minutes
+    refetchInterval: 1000 * 60 * 30,
   });
 
   React.useEffect(() => {
     const updateThemeBasedOnTime = () => {
       const now = new Date();
-      const sunriseTime = mockData && new Date(mockData.firstDay.sunriseTime);
-      const sunsetTime = mockData && new Date(mockData.firstDay.sunsetTime);
+      const sunriseTime = data && new Date(data.firstDay.sunriseTime);
+      const sunsetTime = data && new Date(data.firstDay.sunsetTime);
 
       if (sunriseTime && sunsetTime && now >= sunriseTime && now < sunsetTime) {
         // If the current time is after sunrise but before sunset, use the light theme
@@ -97,27 +102,18 @@ export const AppContainer: React.FC<{ children: React.ReactNode }> = (
       }
     };
 
-    // Calculate the milliseconds until the next hour to align theme updates
-    const now = new Date();
-    const msUntilNextHour =
-      (60 - now.getMinutes()) * 60 * 1000 - now.getSeconds() * 1000;
-    const timeoutId = setTimeout(() => {
-      updateThemeBasedOnTime();
-
-      // After the first timeout, set an interval to update the theme every hour
-      setInterval(updateThemeBasedOnTime, 3600000);
-    }, msUntilNextHour);
-
     updateThemeBasedOnTime();
 
+    const intervalId = setInterval(updateThemeBasedOnTime, 10000);
+
     return () => {
-      clearTimeout(timeoutId);
+      clearInterval(intervalId);
     };
-  }, []);
+  }, [data]);
 
   return (
     <FluentProvider theme={theme} style={fluentProviderStyles}>
-      <WeatherProvider value={{ weather: mockData! }}>
+      <WeatherProvider value={{ weather: data! }}>
         <div className={styles.container}>{props.children}</div>
       </WeatherProvider>
     </FluentProvider>

@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     ...shorthands.gap(tokens.spacingHorizontalM),
+    height: "100%",
   },
 });
 

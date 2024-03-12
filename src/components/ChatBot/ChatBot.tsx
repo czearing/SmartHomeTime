@@ -23,7 +23,7 @@ import { weatherCode } from "../../utils";
 const useStyles = makeStyles({
   chatBotContainer: {
     display: "flex",
-    height: "270px",
+    height: "100%",
     width: "420px",
     ...shorthands.gap(tokens.spacingHorizontalM),
   },
@@ -116,7 +116,6 @@ export const ChatBot = () => {
         header={<Body1Strong>Weather bot</Body1Strong>}
         description={<Caption1>The best weather robot ever</Caption1>}
       />
-      {/* {weatherPrompt} */}
       {data ? (
         <Body2>{data?.content}</Body2>
       ) : (
