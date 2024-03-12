@@ -12,12 +12,12 @@ const getWeatherIconName = (weatherCode: number) => {
     case 10001:
       return "clear-night";
     // Mostly Clear
-    // case 1100:
-    //   weatherIconName = "clear-day";
-    // case 11000:
-    //   weatherIconName = "clear-day";
-    // case 11001:
-    //   weatherIconName = "clear-night";
+    case 1100:
+      return "clear-day";
+    case 11000:
+      return "clear-day";
+    case 11001:
+      return "clear-night";
     // Partly Cloudy
     case 1101:
       return "partly-cloudy-day";
@@ -26,12 +26,12 @@ const getWeatherIconName = (weatherCode: number) => {
     case 11011:
       return "partly-cloudy-night";
     // Mostly Cloudy
-    // case 1102:
-    //   weatherIconName = "partly-cloudy-day";
-    // case 11020:
-    //   weatherIconName = "partly-cloudy-day";
-    // case 11021:
-    //   weatherIconName = "partly-cloudy-night";
+    case 1102:
+      return "partly-cloudy-day";
+    case 11020:
+      return "partly-cloudy-day";
+    case 11021:
+      return "partly-cloudy-night";
     //  Cloudy
     case 1001:
       return "cloudy";
@@ -40,12 +40,12 @@ const getWeatherIconName = (weatherCode: number) => {
     case 10011:
       return "cloudy";
     // Partly Cloudy and Mostly Clear
-    // case 1103:
-    //   return "cloudy";
-    // case 11030:
-    //   return "cloudy";
-    // case 11031:
-    //   return "cloudy";
+    case 1103:
+      return "partly-cloudy-day";
+    case 11030:
+      return "partly-cloudy-day";
+    case 11031:
+      return "partly-cloudy-night";
     //  Light fog
     case 2100:
       return "haze";
@@ -263,6 +263,34 @@ const getWeatherIconName = (weatherCode: number) => {
       return "snow";
     case 51011:
       return "snow";
+    // Thunderstorm
+    case 8000:
+      return "thunderstorms-rain";
+    case 80000:
+      return "thunderstorms-rain";
+    case 80001:
+      return "thunderstorms-rain";
+    // Thunderstorm	+ mostly clear
+    case 8001:
+      return "thunderstorms-day-rain";
+    case 80010:
+      return "thunderstorms-day-rain";
+    case 80011:
+      return "thunderstorms-night-rain";
+    // Thunderstorm + Partly Cloudy
+    case 8003:
+      return "thunderstorms-day-rain";
+    case 80030:
+      return "thunderstorms-day-rain";
+    case 80031:
+      return "thunderstorms-night-rain";
+    // Thunderstorm + Mostly Cloudy
+    case 8002:
+      return "thunderstorms-day-overcast-rain";
+    case 80020:
+      return "thunderstorms-day-overcast-rain";
+    case 80021:
+      return "thunderstorms-night-overcast-rain";
   }
 };
 
