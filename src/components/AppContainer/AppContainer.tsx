@@ -73,7 +73,11 @@ export const AppContainer: React.FC<{ children: React.ReactNode }> = (
   props
 ) => {
   const [theme, setTheme] = React.useState(webLightTheme);
-  const location = useLocation();
+  const location = {
+    lat: process.env.NEXT_PUBLIC_LOCATION_LAT,
+    lng: process.env.NEXT_PUBLIC_LOCATION_LNG,
+  };
+
   const styles = useStyles();
 
   const { data } = useQuery({
