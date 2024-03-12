@@ -305,8 +305,8 @@ export const WeatherIcon = (props: WeatherIconProps) => {
   return (
     <Image
       src={`/icons/weather/${weatherIconName}.svg`}
-      width={64}
-      height={64}
+      width={90}
+      height={90}
     />
   );
 };

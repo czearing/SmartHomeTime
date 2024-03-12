@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     width: "330px",
     ...shorthands.gap(tokens.spacingHorizontalM),
     // TODO: Add specific gradients based on the weather
-    // backgroundImage: "linear-gradient(to bottom, #d3d3d3, #a9a9a9)",
+    backgroundImage: "linear-gradient(to bottom, #d3d3d3, #a9a9a9)",
   },
   columnContainer: {
     display: "flex",
@@ -48,11 +48,9 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     alignItems: "start",
-    ...shorthands.gap(tokens.spacingVerticalM),
   },
   weatherIconContainer: {
     display: "flex",
-    ...shorthands.gap(tokens.spacingHorizontalM),
   },
   flex: {
     display: "flex",
