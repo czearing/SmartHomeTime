@@ -77,18 +77,18 @@ export const Weather = () => {
       setHourlyWeather(currentInterval?.values);
     };
 
-    setHourlyWeather(updateHourlyWeather);
+    updateHourlyWeather();
 
     const intervalId = setInterval(() => {
-      setHourlyWeather(updateHourlyWeather);
-    }, 60000);
+      updateHourlyWeather();
+      // Update the weather every 10 minutes
+    }, 10000);
 
     return () => clearInterval(intervalId);
   }, [weather]);
 
   return (
     <>
-      {/* {JSON.stringify(hourlyWeather)} */}
       <Card className={styles.weatherContainer} appearance="filled">
         {weather ? (
           <div className={styles.mainContainer}>
