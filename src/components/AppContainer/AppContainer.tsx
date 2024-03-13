@@ -86,7 +86,6 @@ export const AppContainer: React.FC<{ children: React.ReactNode }> = (
     enabled: !!location,
     refetchOnWindowFocus: false,
     retry: false,
-    staleTime: 1000 * 60 * 10,
     // Get the weather every 30 minutes
     refetchInterval: 1000 * 60 * 30,
   });
