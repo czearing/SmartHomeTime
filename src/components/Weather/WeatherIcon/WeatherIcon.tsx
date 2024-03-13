@@ -1,7 +1,12 @@
 import Image from "next/image";
 import { WeatherIconProps } from "./WeatherIcon.types";
-import { weatherCode } from "src/utils";
+import { tokens, makeStyles } from "@fluentui/react-components";
 
+const useStyles = makeStyles({
+  iconStyles: {
+    filter: `drop-shadow(0px 0px 2px rgba(0, 0, 0, .20)) drop-shadow(0px 2px 4px rgba(0, 0, 0, .14))`,
+  },
+});
 const getWeatherIconName = (weatherCode: number) => {
   switch (weatherCode) {
     // Clear
@@ -299,14 +304,17 @@ const getWeatherIconName = (weatherCode: number) => {
  */
 export const WeatherIcon = (props: WeatherIconProps) => {
   const { weatherCode } = props;
+  const styles = useStyles();
 
   let weatherIconName = getWeatherIconName(weatherCode);
 
   return (
     <Image
+      className={styles.iconStyles}
       src={`/icons/weather/${weatherIconName}.svg`}
       width={90}
       height={90}
+      layout="fixed" // add this to maintain the dimensions
     />
   );
 };

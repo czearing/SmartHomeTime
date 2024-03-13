@@ -1,4 +1,4 @@
-export const weatherCode: any = {
+export const weatherCodeFull: any = {
   "0": "Unknown",
   "1000": "Clear, Sunny",
   "1100": "Mostly Clear",
@@ -287,4 +287,26 @@ export const weatherCodeNight = {
   "80031": "Partly Cloudy and Thunderstorm",
   "80021": "Mostly Cloudy and Thunderstorm",
   "80001": "Thunderstorm",
+};
+
+export const weatherCode: any = {
+  ...weatherCodeFull,
+  ...weatherCodeDay,
+  ...weatherCodeNight,
+};
+
+export const weatherLinearGradients = {
+  "0": "linear-gradient(135deg, #9E9E9E 0%, #BDBDBD 100%)", // Unknown
+  "1000": "linear-gradient(135deg, #87CEEB 0%, #87CEEB 100%)", // Clear, Sunny
+  "1100": "linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%)", // Mostly Clear
+  "1101": "linear-gradient(135deg, #87CEEB 0%, #F0F8FF 100%)", // Partly Cloudy
+  "1102": "linear-gradient(135deg, #B0E0E6 0%, #F0F8FF 100%)", // Mostly Cloudy
+  "1001": "linear-gradient(135deg, #BEC9CD 0%, #D3DDE3 100%)", // Cloudy
+  "2000": "linear-gradient(135deg, #D3D3D3 0%, #EFEFEF 100%)", // Fog
+  "2100": "linear-gradient(135deg, #ECEBEB 0%, #F5F5F5 100%)", // Light Fog
+  "4000": "linear-gradient(135deg, #CFE8F3 0%, #EFF7FC 100%)", // Drizzle
+  "4001": "linear-gradient(135deg, #7F9AA9 0%, #A3BAC3 100%)", // Rain
+  "4200": "linear-gradient(135deg, #AFCDD5 0%, #D3E2EA 100%)", // Light Rain
+  "4201": "linear-gradient(135deg, #55707D 0%, #809BAE 100%)", // Heavy Rain
+  "5000": "linear-gradient(135deg, #FFFFFF 0%, #F0F8FF 100%)", // Snow
 };

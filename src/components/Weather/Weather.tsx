@@ -12,7 +12,7 @@ import {
 } from "@fluentui/react-components";
 import { WeatherIcon } from "./WeatherIcon";
 import { WeatherContext } from "../../context";
-import { weatherCode } from "../../utils";
+import { weatherCode, weatherLinearGradients } from "../../utils";
 
 const useStyles = makeStyles({
   weatherContainer: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     width: "330px",
     ...shorthands.gap(tokens.spacingHorizontalM),
     // TODO: Add specific gradients based on the weather
-    // backgroundImage: "linear-gradient(to bottom, #d3d3d3, #a9a9a9)",
+    // backgroundImage: "linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%)",
   },
   columnContainer: {
     display: "flex",
