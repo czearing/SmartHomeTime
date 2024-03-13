@@ -1,12 +1,15 @@
 import Image from "next/image";
 import { WeatherIconProps } from "./WeatherIcon.types";
-import { tokens, makeStyles } from "@fluentui/react-components";
+import { makeStyles } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
   iconStyles: {
     filter: `drop-shadow(0px 0px 2px rgba(0, 0, 0, .20)) drop-shadow(0px 2px 4px rgba(0, 0, 0, .14))`,
+    "-webkit-filter":
+      "drop-shadow(0px 0px 2px rgba(0, 0, 0, .20)) drop-shadow(0px 2px 4px rgba(0, 0, 0, .14))",
   },
 });
+
 const getWeatherIconName = (weatherCode: number) => {
   switch (weatherCode) {
     // Clear
