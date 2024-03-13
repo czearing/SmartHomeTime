@@ -23,6 +23,7 @@ export type WeatherTimeline = {
 export type WeatherData = {
   dailyData: WeatherTimeline;
   firstDay: WeatherIntervalValues;
+  hourlyData: WeatherTimeline;
 };
 
 export type WeatherContextValue = {

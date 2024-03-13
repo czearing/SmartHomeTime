@@ -65,7 +65,11 @@ export async function fetchWeather(
     (timeline: any) => timeline?.timestep === "1d"
   );
 
+  const hourlyData = data.data.timelines.find(
+    (timeline: any) => timeline?.timestep === "1h"
+  );
+
   const firstDay = dailyData.intervals[0].values;
 
-  return { dailyData, firstDay };
+  return { dailyData, firstDay, hourlyData };
 }

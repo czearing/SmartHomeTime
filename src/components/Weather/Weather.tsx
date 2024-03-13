@@ -10,9 +10,9 @@ import {
   Spinner,
   Body1Strong,
 } from "@fluentui/react-components";
-import { WeatherIcon } from "./WeatherIcon";
+import { WeatherIcon, WindIcon } from "./";
 import { WeatherContext } from "../../context";
-import { weatherCode, weatherLinearGradients } from "../../utils";
+import { weatherCode } from "../../utils";
 
 const useStyles = makeStyles({
   weatherContainer: {
@@ -34,6 +34,7 @@ const useStyles = makeStyles({
   },
   rowContainer: {
     display: "flex",
+    alignItems: "center",
     flexWrap: "nowrap",
     flexDirection: "row",
     ...shorthands.gap(tokens.spacingHorizontalS),
@@ -59,40 +60,68 @@ const useStyles = makeStyles({
 
 export const Weather = () => {
   const { weather } = React.useContext(WeatherContext);
+  const [hourlyWeather, setHourlyWeather] = React.useState<any>(null);
+
   const styles = useStyles();
 
+  React.useEffect(() => {
+    const updateHourlyWeather = () => {
+      const now = new Date();
+      const currentInterval = weather?.hourlyData.intervals.find((interval) => {
+        const intervalStart = new Date(interval.startTime);
+        return (
+          intervalStart.getDate() === now.getDate() &&
+          intervalStart.getHours() === now.getHours()
+        );
+      });
+      setHourlyWeather(currentInterval?.values);
+    };
+
+    setHourlyWeather(updateHourlyWeather);
+
+    const intervalId = setInterval(() => {
+      setHourlyWeather(updateHourlyWeather);
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, [weather]);
+
   return (
-    <Card className={styles.weatherContainer} appearance="filled">
-      {weather ? (
-        <div className={styles.mainContainer}>
-          <div className={styles.weatherTextContainer}>
-            <div className={styles.weatherIconContainer}>
-              <WeatherIcon weatherCode={weather?.firstDay?.weatherCode} />
-              <div className={styles.flex}>
-                <LargeTitle>
-                  {Math.round(weather?.firstDay?.temperature)}
-                </LargeTitle>
-                <Body1Strong>°F</Body1Strong>
+    <>
+      {/* {JSON.stringify(hourlyWeather)} */}
+      <Card className={styles.weatherContainer} appearance="filled">
+        {weather && hourlyWeather ? (
+          <div className={styles.mainContainer}>
+            <div className={styles.weatherTextContainer}>
+              <div className={styles.weatherIconContainer}>
+                <WeatherIcon weatherCode={hourlyWeather?.weatherCode} />
+                <div className={styles.flex}>
+                  <LargeTitle>
+                    {Math.round(hourlyWeather?.temperature)}
+                  </LargeTitle>
+                  <Body1Strong>°F</Body1Strong>
+                </div>
+              </div>
+
+              <Subtitle2>{weatherCode[hourlyWeather?.weatherCode]}</Subtitle2>
+            </div>
+
+            <div className={styles.columnContainer}>
+              <div className={styles.rowContainer}>
+                <Body1Strong>Wind</Body1Strong>
+                {/* <WindIcon windSpeed={hourlyWeather?.windSpeed} /> */}
+                <Body1>{Math.round(hourlyWeather?.windSpeed)} mph</Body1>
+              </div>
+              <div className={styles.rowContainer}>
+                <Body1Strong>Humidity</Body1Strong>
+                <Body1>{Math.round(hourlyWeather?.humidity)}%</Body1>
               </div>
             </div>
-
-            <Subtitle2>{weatherCode[weather?.firstDay?.weatherCode]}</Subtitle2>
           </div>
-
-          <div className={styles.columnContainer}>
-            <div className={styles.rowContainer}>
-              <Body1Strong>Wind</Body1Strong>
-              <Body1>{Math.round(weather?.firstDay?.windSpeed)} mph</Body1>
-            </div>
-            <div className={styles.rowContainer}>
-              <Body1Strong>Humidity</Body1Strong>
-              <Body1>{Math.round(weather?.firstDay?.humidity)}%</Body1>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <Spinner />
-      )}
-    </Card>
+        ) : (
+          <Spinner />
+        )}
+      </Card>
+    </>
   );
 };
