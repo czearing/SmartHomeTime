@@ -15,7 +15,7 @@ export default async function handler(
 
   // Call the chat endpoint with the prompt and some options
   const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
+    model: "gpt-4-0125-preview",
     messages: [
       {
         role: "system",

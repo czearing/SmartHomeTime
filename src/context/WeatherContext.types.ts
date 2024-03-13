@@ -6,6 +6,7 @@ export type WeatherIntervalValues = {
   weatherCode: number;
   windSpeed: number;
   humidity: number;
+  uvIndex: number;
 };
 
 export type WeatherInterval = {

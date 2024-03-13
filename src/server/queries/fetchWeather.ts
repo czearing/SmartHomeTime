@@ -20,6 +20,7 @@ const createWeatherQuery = (incomingLocation: Location) => {
     "precipitationProbability",
     "windSpeed",
     "humidity",
+    "uvIndex",
   ];
 
   const units = "imperial";

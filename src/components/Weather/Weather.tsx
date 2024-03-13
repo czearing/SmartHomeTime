@@ -10,7 +10,7 @@ import {
   Spinner,
   Body1Strong,
 } from "@fluentui/react-components";
-import { WeatherIcon, WindIcon } from "./";
+import { WeatherIcon, UvIcon } from "./";
 import { WeatherContext } from "../../context";
 import { weatherCode } from "../../utils";
 
@@ -90,7 +90,7 @@ export const Weather = () => {
     <>
       {/* {JSON.stringify(hourlyWeather)} */}
       <Card className={styles.weatherContainer} appearance="filled">
-        {weather && hourlyWeather ? (
+        {weather ? (
           <div className={styles.mainContainer}>
             <div className={styles.weatherTextContainer}>
               <div className={styles.weatherIconContainer}>
@@ -115,6 +115,10 @@ export const Weather = () => {
               <div className={styles.rowContainer}>
                 <Body1Strong>Humidity</Body1Strong>
                 <Body1>{Math.round(hourlyWeather?.humidity)}%</Body1>
+              </div>
+              <div className={styles.rowContainer}>
+                <Body1Strong>UV</Body1Strong>
+                <UvIcon uvIndex={hourlyWeather?.uvIndex} />
               </div>
             </div>
           </div>
