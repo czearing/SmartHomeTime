@@ -91,8 +91,7 @@ export const HourlyWeather = () => {
         <div
           style={{
             display: "flex",
-            gap: "2px",
-
+            height: "100%",
             flexDirection: "column",
           }}
         >
@@ -100,6 +99,7 @@ export const HourlyWeather = () => {
             <>
               <div
                 style={{
+                  opacity: 1 - index * 0.15,
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
@@ -120,14 +120,16 @@ export const HourlyWeather = () => {
                 <Body1Strong>{`${Math.round(
                   interval.values.temperature
                 )}°`}</Body1Strong>
-                <div style={{}}>
-                  <Body1>{interval.values.precipitationProbability}</Body1>
-                  <Image
-                    src="/icons/weather/static/humidity.svg"
-                    width={"18px"}
-                    height={"18px"}
-                  />
-                </div>
+                {interval.values.precipitationProbability !== 0 && (
+                  <div>
+                    <Body1>{interval.values.precipitationProbability}</Body1>
+                    <Image
+                      src="/icons/weather/static/humidity.svg"
+                      width={"18px"}
+                      height={"18px"}
+                    />
+                  </div>
+                )}
               </div>
               {hourlyWeather.length - 1 != index && (
                 <Divider
