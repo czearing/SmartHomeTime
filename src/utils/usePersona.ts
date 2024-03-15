@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchOpenAi } from "../server";
 
-export const useOpenAi = (input: string, instructions: string) => {
+export const usePersona = (input: string, instructions: string) => {
   const { data, isLoading } = useQuery({
     queryKey: ["open-ai", input],
     queryFn: () => fetchOpenAi(input, instructions),
@@ -11,5 +11,5 @@ export const useOpenAi = (input: string, instructions: string) => {
     staleTime: 1000 * 60 * 10,
   });
 
-  return { data, isLoading };
+  return { persona: data, isPersonaLoading: isLoading };
 };

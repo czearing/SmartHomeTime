@@ -16,7 +16,7 @@ import {
   Body1,
   Body2,
 } from "@fluentui/react-components";
-import { useOpenAi } from "../../utils";
+import { useOpenAi, usePersona } from "../../utils";
 import { WeatherContext } from "../../context";
 import { weatherCode } from "../../utils";
 
@@ -83,6 +83,11 @@ export const ChatBot = () => {
     }),
   };
 
+  // const { persona } = usePersona(
+  //   `You are a chat bot that is instructed to create persona prompts for chatbots.`,
+  //   `It should be in the following JSON format: {name: "persona name", description: "5-6 word brief description", prompt: "the persona prompt"}`
+  // );
+
   const mainBotPrompt =
     openAiPromptData &&
     "You are a funny weather bot assistant to Caleb Zearing who is a software engineer.";
@@ -93,7 +98,10 @@ export const ChatBot = () => {
 
   const openAiPrompt = openAiPromptData && mainBotPrompt + " " + weatherPrompt;
 
-  const { data } = useOpenAi(openAiPrompt!);
+  const instructions =
+    "Briefly tell me something cool about today and a concise overview of the weather.";
+
+  const { data } = useOpenAi(openAiPrompt!, instructions);
 
   React.useEffect(() => {
     const updateDateTime = () => {
@@ -111,6 +119,7 @@ export const ChatBot = () => {
 
   return (
     <Card className={styles.chatBotContainer} appearance="filled">
+      {/* {JSON.stringify(persona)} */}
       <CardHeader
         image={<Avatar />}
         header={<Body1Strong>Weather bot</Body1Strong>}

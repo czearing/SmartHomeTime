@@ -12,6 +12,7 @@ export default async function handler(
 ) {
   // Get the prompt from the query parameter
   const prompt = req.query.prompt as string;
+  const instructions = req.query.instructions as string;
 
   // Call the chat endpoint with the prompt and some options
   const response = await openai.chat.completions.create({
@@ -23,8 +24,7 @@ export default async function handler(
       },
       {
         role: "user",
-        content:
-          "Briefly tell me something cool about today and a concise overview of the weather.",
+        content: instructions,
       },
     ],
     max_tokens: 120,
