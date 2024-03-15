@@ -9,8 +9,7 @@ import {
 } from "@fluentui/react-components";
 import { useQuery } from "@tanstack/react-query";
 import { fetchWeather } from "../../server";
-import { useLocation } from "../../utils";
-import { WeatherProvider } from "src/context";
+import { WeatherProvider, ThemeProvider } from "src/context";
 
 const fluentProviderStyles = {
   height: "100%",
@@ -116,9 +115,13 @@ export const AppContainer: React.FC<{ children: React.ReactNode }> = (
 
   return (
     <FluentProvider theme={theme} style={fluentProviderStyles}>
-      <WeatherProvider value={{ weather: data! }}>
-        <div className={styles.container}>{props.children}</div>
-      </WeatherProvider>
+      <ThemeProvider
+        value={{ theme: theme === webLightTheme ? "light" : "dark" }}
+      >
+        <WeatherProvider value={{ weather: data! }}>
+          <div className={styles.container}>{props.children}</div>
+        </WeatherProvider>
+      </ThemeProvider>
     </FluentProvider>
   );
 };

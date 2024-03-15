@@ -22,6 +22,8 @@ import {
   WeatherContext,
   WeatherIntervalValues,
   WeatherInterval,
+  useTheme,
+  useWeather,
 } from "../../context";
 import { weatherCode } from "../../utils";
 import { WeatherIcon } from "../Weather";
@@ -37,7 +39,9 @@ const useStyles = makeStyles({
 });
 
 export const HourlyWeather = () => {
-  const { weather } = React.useContext(WeatherContext);
+  const { weather } = useWeather();
+  const { theme } = useTheme();
+
   const [hourlyWeather, setHourlyWeather] = React.useState<
     WeatherInterval[] | null
   >(null);
@@ -77,6 +81,9 @@ export const HourlyWeather = () => {
     return () => clearInterval(intervalId);
   }, [weather]);
 
+  const backgroundColorGradient =
+    theme !== "light" ? "rgba(255, 255, 255" : "rgba(0, 0, 0";
+
   return (
     <Card className={styles.hourlyWeatherContainer} appearance="filled">
       <div
@@ -100,6 +107,9 @@ export const HourlyWeather = () => {
               <div
                 style={{
                   opacity: 1 - index * 0.15,
+
+                  //  backgroundColor: tokens.colorNeutralForeground1,
+                  backgroundColor: `${backgroundColorGradient}, ${index * 0.05})`,
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
@@ -131,17 +141,6 @@ export const HourlyWeather = () => {
                   </div>
                 )}
               </div>
-              {hourlyWeather.length - 1 != index && (
-                <Divider
-                  style={{
-                    display: "flex",
-                    flexGrow: "1",
-                    height: "100%",
-                    maxHeight: "150px",
-                  }}
-                  appearance="subtle"
-                />
-              )}
             </>
           ))}
         </div>

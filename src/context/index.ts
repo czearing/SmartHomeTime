@@ -1,2 +1,2 @@
-export * from "./WeatherContext";
-export * from "./WeatherContext.types";
+export * from "./WeatherProvider";
+export * from "./ThemeProvider";
