@@ -1,11 +1,10 @@
 import React from "react";
-import { ThemeProviderContextValue } from "./ThemeProvider.types";
+import { ThemeContextValue } from "./ThemeProvider.types";
 
-export const ThemeProviderContext =
-  React.createContext<ThemeProviderContextValue>({
-    theme: null,
-  });
+export const ThemeContext = React.createContext<ThemeContextValue>({
+  theme: null,
+});
 
-export const ThemeProvider = ThemeProviderContext.Provider;
+export const ThemeProvider = ThemeContext.Provider;
 
-export const useTheme = () => React.useContext(ThemeProviderContext);
+export const useTheme = () => React.useContext(ThemeContext);

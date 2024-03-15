@@ -16,6 +16,7 @@ import {
   Body1,
   Body2,
   Divider,
+  Body1Stronger,
 } from "@fluentui/react-components";
 import { useOpenAi, usePersona } from "../../utils";
 import {
@@ -108,7 +109,6 @@ export const HourlyWeather = () => {
                 style={{
                   opacity: 1 - index * 0.15,
                   height: "100%",
-                  //  backgroundColor: tokens.colorNeutralForeground1,
                   backgroundColor: `${backgroundColorGradient}, ${index * 0.05})`,
                   display: "flex",
                   flexDirection: "row",
@@ -116,7 +116,7 @@ export const HourlyWeather = () => {
                   gap: tokens.spacingHorizontalXL,
                 }}
               >
-                <Body1 style={{ width: "80px" }}>
+                <Body1 style={{ width: "90px" }}>
                   {new Date(interval.startTime).toLocaleTimeString(undefined, {
                     hour: "numeric",
                     minute: "2-digit",
@@ -127,17 +127,42 @@ export const HourlyWeather = () => {
                   size={"small"}
                   weatherCode={interval.values.weatherCode}
                 />
-                <Body1Strong>{`${Math.round(
+
+                <Body1Stronger>{`${Math.round(
                   interval.values.temperature
-                )}°`}</Body1Strong>
+                )}°`}</Body1Stronger>
                 {interval.values.precipitationProbability !== 0 && (
-                  <div>
-                    <Body1>{interval.values.precipitationProbability}</Body1>
+                  <>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: tokens.spacingHorizontalXS,
+                      }}
+                    >
+                      <Body1>{interval.values.precipitationProbability}</Body1>
+                      <Image
+                        src="/icons/weather/static/humidity.svg"
+                        width={"18px"}
+                        height={"18px"}
+                      />
+                    </div>
+                  </>
+                )}
+                {interval.values.windSpeed > 15 && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: tokens.spacingHorizontalXS,
+                    }}
+                  >
                     <Image
-                      src="/icons/weather/static/humidity.svg"
+                      src="/icons/weather/static/wind.svg"
                       width={"18px"}
                       height={"18px"}
                     />
+                    <Body1>{interval.values.windSpeed} mph</Body1>
                   </div>
                 )}
               </div>
