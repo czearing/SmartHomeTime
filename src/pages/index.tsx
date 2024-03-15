@@ -19,6 +19,12 @@ const useStyles = makeStyles({
     ...shorthands.gap(tokens.spacingHorizontalM),
     height: "100%",
   },
+  lowCardContainer: {
+    display: "flex",
+    flexDirection: "row",
+    ...shorthands.gap(tokens.spacingHorizontalM),
+    height: "100%",
+  },
 });
 
 export default function Home() {
@@ -31,7 +37,7 @@ export default function Home() {
         <Weather />
         <SunRiseSet />
       </div>
-      <div className={styles.container}>
+      <div className={styles.lowCardContainer}>
         <ChatBot />
         <HourlyWeather />
       </div>
