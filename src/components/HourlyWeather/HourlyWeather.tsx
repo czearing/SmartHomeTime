@@ -91,7 +91,7 @@ export const HourlyWeather = () => {
         <div
           style={{
             display: "flex",
-            gap: "10px",
+            gap: "2px",
 
             flexDirection: "column",
           }}
