@@ -114,6 +114,10 @@ export const HourlyWeather = () => {
                   flexDirection: "row",
                   alignItems: "center",
                   gap: tokens.spacingHorizontalXL,
+                  marginLeft: "-12px",
+                  marginRight: "-12px",
+                  paddingLeft: "12px",
+                  paddingRight: "12px",
                 }}
               >
                 <Body1 style={{ width: "90px" }}>
