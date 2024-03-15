@@ -107,7 +107,7 @@ export const HourlyWeather = () => {
               <div
                 style={{
                   opacity: 1 - index * 0.15,
-
+                  height: "100%",
                   //  backgroundColor: tokens.colorNeutralForeground1,
                   backgroundColor: `${backgroundColorGradient}, ${index * 0.05})`,
                   display: "flex",
