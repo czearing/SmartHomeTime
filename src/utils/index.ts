@@ -5,3 +5,4 @@ export * from "./useLocation";
 export * from "./formatTime";
 export * from "./weatherCode";
 export * from "./useOpenAi";
+export * from "./usePersona";

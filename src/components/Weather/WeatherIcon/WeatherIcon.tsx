@@ -306,17 +306,18 @@ const getWeatherIconName = (weatherCode: number) => {
  * Displays the appropriate weather icon based on the weather code
  */
 export const WeatherIcon = (props: WeatherIconProps) => {
-  const { weatherCode } = props;
+  const { weatherCode, size = "medium", animated = true } = props;
   const styles = useStyles();
 
   let weatherIconName = getWeatherIconName(weatherCode);
 
+  const iconSize = size === "small" ? 48 : size === "medium" ? 90 : 120;
   return (
     <Image
       className={styles.iconStyles}
-      src={`/icons/weather/${weatherIconName}.svg`}
-      width={90}
-      height={90}
+      src={`/icons/weather/${animated ? "animated" : "static"}/${weatherIconName}.svg`}
+      width={iconSize}
+      height={iconSize}
       layout="fixed" // add this to maintain the dimensions
     />
   );

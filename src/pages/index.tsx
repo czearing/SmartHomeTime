@@ -1,6 +1,12 @@
 import * as React from "react";
 import { tokens, makeStyles, shorthands } from "@fluentui/react-components";
-import { Clock, SunRiseSet, Weather, ChatBot } from "../components";
+import {
+  Clock,
+  SunRiseSet,
+  Weather,
+  ChatBot,
+  HourlyWeather,
+} from "../components";
 
 const useStyles = makeStyles({
   container: {
@@ -25,7 +31,10 @@ export default function Home() {
         <Weather />
         <SunRiseSet />
       </div>
-      <ChatBot />
+      <div className={styles.container}>
+        <ChatBot />
+        <HourlyWeather />
+      </div>
     </div>
   );
 }
