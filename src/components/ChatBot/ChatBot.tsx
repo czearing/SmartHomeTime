@@ -94,7 +94,7 @@ export const ChatBot = () => {
 
   const weatherPrompt =
     openAiPromptData &&
-    `Today is ${openAiPromptData.currentDate} around ${openAiPromptData.currentTime}. For today the sun sets at ${openAiPromptData.sunSet} and rises/rised at ${openAiPromptData.sunRise}, tomorrow it will rise ${openAiPromptData.tomorrowSunRise}. The weather is currently ${openAiPromptData.weather} with a temperature of ${openAiPromptData.temperature}, wind speeds of ${openAiPromptData.wind}, and a humidity of  ${openAiPromptData.humidity}.`;
+    `Today is ${openAiPromptData.currentDate} around ${openAiPromptData.currentTime}. The weather is currently ${openAiPromptData.weather} with a temperature of ${openAiPromptData.temperature}, wind speeds of ${openAiPromptData.wind}, and a humidity of  ${openAiPromptData.humidity}.`;
 
   const openAiPrompt = openAiPromptData && mainBotPrompt + " " + weatherPrompt;
 

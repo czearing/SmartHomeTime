@@ -1,32 +1,15 @@
 import * as React from "react";
 import {
-  Avatar,
   Card,
   CardHeader,
-  LargeTitle,
   Subtitle1,
   tokens,
   makeStyles,
   shorthands,
-  Button,
-  Input,
-  Spinner,
-  Body1Strong,
-  Caption1,
   Body1,
-  Body2,
-  Divider,
   Body1Stronger,
 } from "@fluentui/react-components";
-import { useOpenAi, usePersona } from "../../utils";
-import {
-  WeatherContext,
-  WeatherIntervalValues,
-  WeatherInterval,
-  useTheme,
-  useWeather,
-} from "../../context";
-import { weatherCode } from "../../utils";
+import { WeatherInterval, useTheme, useWeather } from "../../context";
 import { WeatherIcon } from "../Weather";
 import Image from "next/image";
 
@@ -36,6 +19,18 @@ const useStyles = makeStyles({
     height: "100%",
     width: "420px",
     ...shorthands.gap(tokens.spacingHorizontalM),
+  },
+  cardContainer: {
+    display: "flex",
+
+    height: "100%",
+    flexDirection: "column",
+  },
+  cardItemContainer: {
+    display: "flex",
+    ...shorthands.gap("10px"),
+    height: "100%",
+    flexDirection: "column",
   },
 });
 
@@ -87,22 +82,9 @@ export const HourlyWeather = () => {
 
   return (
     <Card className={styles.hourlyWeatherContainer} appearance="filled">
-      <div
-        style={{
-          display: "flex",
-          gap: "10px",
-          height: "100%",
-          flexDirection: "column",
-        }}
-      >
+      <div className={styles.cardItemContainer}>
         <CardHeader header={<Subtitle1>Hourly weather</Subtitle1>} />
-        <div
-          style={{
-            display: "flex",
-            height: "100%",
-            flexDirection: "column",
-          }}
-        >
+        <div className={styles.cardContainer}>
           {hourlyWeather?.map((interval, index) => (
             <>
               <div
