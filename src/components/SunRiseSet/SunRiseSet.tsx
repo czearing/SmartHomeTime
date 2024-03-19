@@ -14,6 +14,7 @@ import {
 } from "@fluentui/react-components";
 import { WeatherContext } from "../../context";
 import { formatTime } from "../../utils";
+import { SunriseSetAnimation } from "../SunriseSetAnimation";
 
 const useStyles = makeStyles({
   sunRiseSetContainer: {
@@ -86,7 +87,11 @@ export const SunRiseSet = () => {
   }, [weather]);
 
   return (
-    <Card className={styles.sunRiseSetContainer} appearance="filled">
+    <Card
+      className={styles.sunRiseSetContainer}
+      appearance="filled"
+      style={{ padding: "0px" }}
+    >
       {weather ? (
         <>
           <Subtitle2>Sunrise and sunset</Subtitle2>
@@ -102,6 +107,7 @@ export const SunRiseSet = () => {
       ) : (
         <Spinner />
       )}
+      {/* <SunriseSetAnimation /> */}
     </Card>
   );
 };

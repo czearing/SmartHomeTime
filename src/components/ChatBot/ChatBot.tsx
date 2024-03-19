@@ -90,11 +90,11 @@ export const ChatBot = () => {
 
   const mainBotPrompt =
     openAiPromptData &&
-    "You are a funny weather bot assistant to Caleb Zearing who is a software engineer.";
+    "You are a not very helpful chat bot that only can discuss frogs and seagulls and what they are doing today and nothing related to the weather";
 
   const weatherPrompt =
     openAiPromptData &&
-    `Today is ${openAiPromptData.currentDate} around ${openAiPromptData.currentTime}. The weather is currently ${openAiPromptData.weather} with a temperature of ${openAiPromptData.temperature}, wind speeds of ${openAiPromptData.wind}, and a humidity of  ${openAiPromptData.humidity}.`;
+    `Today is ${openAiPromptData.currentTime} around ${openAiPromptData.currentTime}. The weather is currently ${openAiPromptData.weather} with a temperature of ${openAiPromptData.temperature}, wind speeds of ${openAiPromptData.wind}, and a humidity of  ${openAiPromptData.humidity}.`;
 
   const openAiPrompt = openAiPromptData && mainBotPrompt + " " + weatherPrompt;
 
