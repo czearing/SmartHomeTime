@@ -4,7 +4,7 @@ import { SSRProvider } from "@fluentui/react-utilities";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { RendererProvider, createDOMRenderer } from "@griffel/react";
-import { AppContainer } from "../components";
+import { AppContainer } from "../clients/components";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "../clients";
 

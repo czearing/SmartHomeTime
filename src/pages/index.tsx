@@ -6,7 +6,7 @@ import {
   Weather,
   ChatBot,
   HourlyWeather,
-} from "../components";
+} from "../clients/components";
 
 const useStyles = makeStyles({
   container: {
